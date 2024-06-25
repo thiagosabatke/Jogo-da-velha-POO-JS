@@ -146,8 +146,21 @@ botaoVoltarInput.addEventListener('click', () => {
 });
 
 botaoIniciarJogo.addEventListener('click', () => {
-    const nomeJogador1 = document.getElementById('player1').value || 'Jogador 1';
-    const nomeJogador2 = document.getElementById('player2').value || 'Jogador 2';
+    const inputJogador1 = document.getElementById('player1').value;
+    const inputJogador2 = document.getElementById('player2').value;
+
+    const nomeJogador1 = inputJogador1 || 'Jogador 1';
+    const nomeJogador2 = inputJogador2 || 'Jogador 2';
+
+    if (inputJogador1 && inputJogador1.length > 6) {
+        alert('O nome do Jogador 1 deve ter menos de 6 letras.');
+        return; 
+    }
+    
+    if (inputJogador2 && inputJogador2.length > 5) {
+        alert('O nome do Jogador 2 deve ter menos de 6 letras.');
+        return;
+    }
 
     const jogador1 = new Jogador(nomeJogador1);
     const jogador2 = new Jogador(nomeJogador2);
@@ -224,7 +237,7 @@ function carregarResultadosSalvos() {
         if (resultado.resultado === 'Empate') {
             li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = Empate`;
         } else {
-            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = ${resultado.resultado}` ;
+            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = ${resultado.resultado} Venceu` ;
         }
         listaResultados.appendChild(li);
     });
