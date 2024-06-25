@@ -178,3 +178,20 @@ document.getElementById('backToMenuModal').addEventListener('click', () => {
     document.getElementById('mainMenu').style.display = 'block'; 
     document.getElementById('gameBoard').style.display = 'none'; 
 });
+
+function limparJogo() {
+    jogoDaVelha.tabuleiro = ["", "", "", "", "", "", "", "", ""];
+    jogoDaVelha.contagemJogadas = 0;
+    jogoDaVelha.emAndamento = false;
+    jogoDaVelha.atualizarTabuleiro();
+
+    jogoDaVelha.indexJogadorAtual = 0;
+    jogoDaVelha.jogadorAtual = jogoDaVelha.jogadores[jogoDaVelha.indexJogadorAtual];
+    jogoDaVelha.atualizarDisplayJogadorAtual();
+
+    document.getElementById('gameBoard').style.display = 'none';
+
+    document.querySelectorAll('.cell').forEach(celula => {
+        celula.style.pointerEvents = 'auto';
+    });
+}
