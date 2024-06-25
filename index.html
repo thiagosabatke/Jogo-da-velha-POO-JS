@@ -8,6 +8,49 @@
 </head>
 <body>
     
+    <div id="mainMenu">
+        <h2>Bem-vindo ao Jogo da Velha!</h2>
+        <button id="play">Jogar</button>
+        <button id="showHistory">Histórico de Resultados</button>
+    </div>
+
+    <div id="nameInput" style="display: none;">
+        <h2>Digite os nomes dos jogadores:</h2>
+        <input type="text" id="player1" placeholder="Jogador 1">
+        <input type="text" id="player2" placeholder="Jogador 2">
+        <button id="startGame">Iniciar Jogo</button>
+        <button id="backToMenuInput">Voltar ao Menu</button>
+    </div>
+
+    <div id="gameBoard" style="display: none;">
+        <h2 id="currentPlayer"></h2>
+        <div class="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+    </div>
+
+    <div id="history" style="display: none;">
+        <h2>Histórico de Resultados</h2>
+        <ul id="resultsList"></ul>
+        <button id="backToMenu">Voltar ao Menu</button>
+    </div>
+
+    <div id="resultModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <p id="modalMessage"></p>
+            <button id="backToMenuModal">Voltar ao Menu</button>
+        </div>
+    </div>
+
     <script src="assets/app.js"></script>
 </body>
 </html>
