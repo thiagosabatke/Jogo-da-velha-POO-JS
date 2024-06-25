@@ -195,3 +195,42 @@ function limparJogo() {
         celula.style.pointerEvents = 'auto';
     });
 }
+
+function salvarNoLocalStorage(jogador1, jogador2, resultado) {
+    
+    const resultadosSalvos = JSON.parse(localStorage.getItem('resultados')) || [];
+
+    
+    resultadosSalvos.push({
+        jogador1: jogador1,
+        jogador2: jogador2,
+        resultado: resultado,
+    });
+
+    
+    localStorage.setItem('resultados', JSON.stringify(resultadosSalvos));
+}
+
+
+function carregarResultadosSalvos() {
+    const resultadosSalvos = JSON.parse(localStorage.getItem('resultados')) || [];
+    const listaResultados = document.getElementById('resultsList');
+
+    
+    listaResultados.innerHTML = '';
+
+    resultadosSalvos.forEach(resultado => {
+        const li = document.createElement('li');
+        if (resultado.resultado === 'Empate') {
+            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = Empate`;
+        } else {
+            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = ${resultado.resultado}` ;
+        }
+        listaResultados.appendChild(li);
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    carregarResultadosSalvos();
+});
