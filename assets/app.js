@@ -94,31 +94,24 @@ class JogoDaVelha {
         displayJogadorAtual.textContent = `Vez de: ${this.jogadorAtual.pegarNome()}`;
     }
 
-    salvarResultado(resultado) {
-        const resultadoFormatado = {
-            jogador1: this.jogadores[0].pegarNome(),
-            jogador2: this.jogadores[1].pegarNome(),
-            resultado: resultado,
-        };
-    
-        const resultadosSalvos = JSON.parse(localStorage.getItem('resultados')) || [];
-        resultadosSalvos.push(resultadoFormatado);
-        localStorage.setItem('resultados', JSON.stringify(resultadosSalvos));
-    
-        const listaResultados = document.getElementById('resultsList');
-        const li = document.createElement('li');
-        if (resultado === 'Empate') {
-            li.textContent = `${resultadoFormatado.jogador1} x ${resultadoFormatado.jogador2} = Empate`;
-        } else {
-            li.textContent = `${resultadoFormatado.jogador1} x ${resultadoFormatado.jogador2} = ${resultado} Venceu`;
+    salvarResultado(nomeVencedor) {
+        if (nomeVencedor !== 'Empate') {
+            const ranking = JSON.parse(localStorage.getItem('ranking')) || {};
+            
+            if (ranking[nomeVencedor]) {
+                ranking[nomeVencedor]++;
+            } else {
+                ranking[nomeVencedor] = 1;
+            }
+
+            localStorage.setItem('ranking', JSON.stringify(ranking));
         }
-        listaResultados.appendChild(li);
     }
 }
 
 
 const botaoJogar = document.getElementById('play');
-const botaoHistorico = document.getElementById('showHistory');
+const botaoRanking = document.getElementById('showRanking');
 const botaoVoltar = document.getElementById('backToMenu');
 const botaoVoltarInput = document.getElementById('backToMenuInput');
 const botaoIniciarJogo = document.getElementById('startGame');
@@ -130,13 +123,14 @@ botaoJogar.addEventListener('click', () => {
     document.getElementById('nameInput').style.display = 'block';
 });
 
-botaoHistorico.addEventListener('click', () => {
+botaoRanking.addEventListener('click', () => {
     document.getElementById('mainMenu').style.display = 'none';
-    document.getElementById('history').style.display = 'block';
+    document.getElementById('ranking').style.display = 'block';
+    atualizarRanking();
 });
 
 botaoVoltar.addEventListener('click', () => {
-    document.getElementById('history').style.display = 'none';
+    document.getElementById('ranking').style.display = 'none';
     document.getElementById('mainMenu').style.display = 'block';
 });
 
@@ -181,9 +175,6 @@ document.querySelectorAll('.cell').forEach(celula => {
     }); 
 });
 
-document.getElementById('closeModal').addEventListener('click', () => {
-    document.getElementById('resultModal').style.display = 'none';
-});
 
 document.getElementById('backToMenuModal').addEventListener('click', () => {
     document.getElementById('resultModal').style.display = 'none';
@@ -209,41 +200,16 @@ function limparJogo() {
     });
 }
 
-function salvarNoLocalStorage(jogador1, jogador2, resultado) {
-    
-    const resultadosSalvos = JSON.parse(localStorage.getItem('resultados')) || [];
+function atualizarRanking() {
+    const ranking = JSON.parse(localStorage.getItem('ranking')) || {};
+    const rankingList = document.getElementById('rankingList');
+    rankingList.innerHTML = '';
 
-    
-    resultadosSalvos.push({
-        jogador1: jogador1,
-        jogador2: jogador2,
-        resultado: resultado,
-    });
+    const jogadores = Object.keys(ranking).sort((a, b) => ranking[b] - ranking[a]);
 
-    
-    localStorage.setItem('resultados', JSON.stringify(resultadosSalvos));
-}
-
-
-function carregarResultadosSalvos() {
-    const resultadosSalvos = JSON.parse(localStorage.getItem('resultados')) || [];
-    const listaResultados = document.getElementById('resultsList');
-
-    
-    listaResultados.innerHTML = '';
-
-    resultadosSalvos.forEach(resultado => {
+    jogadores.forEach(jogador => {
         const li = document.createElement('li');
-        if (resultado.resultado === 'Empate') {
-            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = Empate`;
-        } else {
-            li.textContent = `${resultado.jogador1} x ${resultado.jogador2} = ${resultado.resultado} Venceu` ;
-        }
-        listaResultados.appendChild(li);
+        li.textContent = `${jogador}: ${ranking[jogador]} vitórias`;
+        rankingList.appendChild(li);
     });
 }
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    carregarResultadosSalvos();
-});

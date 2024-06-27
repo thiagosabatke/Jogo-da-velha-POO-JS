@@ -11,7 +11,7 @@
     <div id="mainMenu">
         <h2>Bem-vindo ao Jogo da Velha!</h2>
         <button id="play">Jogar</button>
-        <button id="showHistory">Histórico de Resultados</button>
+        <button id="showRanking">Ranking de Jogadores</button>
     </div>
 
     <div id="nameInput" style="display: none;">
@@ -37,15 +37,14 @@
         </div>
     </div>
 
-    <div id="history" style="display: none;">
-        <h2>Histórico de Resultados</h2>
-        <ul id="resultsList"></ul>
+    <div id="ranking" style="display: none;">
+        <h2>Ranking de Jogadores</h2>
+        <ul id="rankingList"></ul>
         <button id="backToMenu">Voltar ao Menu</button>
     </div>
 
     <div id="resultModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
             <p id="modalMessage"></p>
             <button id="backToMenuModal">Voltar ao Menu</button>
         </div>
